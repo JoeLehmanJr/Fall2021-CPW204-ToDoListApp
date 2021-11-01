@@ -4,9 +4,73 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/js-datepicker/dist/datepicker.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>ToDo List App</title>
 </head>
 <body>
-    <h1>ToDo List</h1>
+    <div class="container">
+        <h1>ToDo List</h1>
+        <form>
+            <div class="row">
+                <div class="col-25">
+                    <label id="Subject-label" for="Subject">Title: </label>
+                </div>
+                <div class="col-50">
+                    <input type="text" id="Subject">
+                    <span id="title-msg">*</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label id="task-label" for="date-due">Full Task Descriptions:</label>
+                </div>
+                <div class="col-50">
+                    <textarea rows="4" cols="50" id="task"></textarea>
+                    <span id="task-msg">*</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    <label id="date-due-label" for="date-due">Due Date: </label>
+                </div>
+                <div class="col-50">
+                    <input type="text" id="date-due">
+                    <span id="date-msg">*</span>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-25">
+                    <label id="status-label" for="status">Status: </label>
+                </div>
+                <div class="col-50">
+                    <select id="status">
+                        <option value="">Please Select Status Option</option>
+                        <option value="hs">Haven't Started</option>
+                        <option value="s">Started</option>
+                        <option value="oh">On Hold</option>
+                        <option value="d">Done</option>
+                    </select>
+                    <div class="col-25b">
+                        <span id="status-msg">*</span>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+            <div id="btn" class="row">
+                <input type="button" value="Add ToDo Item">
+            </div>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/js-datepicker"></script>
+    <script>
+        const picker = datepicker("#date-due");
+        picker.setMin(new Date());
+    </script>
 </body>
 </html>

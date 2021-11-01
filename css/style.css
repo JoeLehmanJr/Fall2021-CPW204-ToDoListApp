@@ -1,0 +1,82 @@
+* {
+    box-sizing: border-box;
+  }
+
+  input[type=text], select, textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+  }
+
+  label {
+    padding: 12px 6px 12px 0;
+    display: inline-block;
+  }
+
+  input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+  }
+
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  .container {
+    border-radius: 5px;
+    padding: 10px;
+    display: table;
+    margin: 0 auto;
+
+  }
+
+  .col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+    text-align: right;
+  }
+
+  .col-25b {
+    float: right;
+    margin-top: 6px;
+    text-align: right;
+  }
+  .col-50{
+    float: left;
+    margin-top: 6px;
+  }
+
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    padding-bottom: .25em;
+    padding-top: .25em;
+  }
+
+  #btn {
+      text-align: center;
+  }
+
+  form{
+    border:2px solid black;
+    border-radius: 8px;
+    background-color: teal;
+    width: 850px;
+  }
+
+  h1{
+      text-align:center;
+  }
+  span{
+      vertical-align: top;
+  }
