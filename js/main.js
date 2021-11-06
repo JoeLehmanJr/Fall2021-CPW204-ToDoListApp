@@ -17,6 +17,15 @@ function isValid(item) {
     return isAllDataValid;
 }
 function getToDoItem() {
+    var singleToDoItem = new ToDoItem;
+    var summary = getInById("Summary").value;
+    singleToDoItem.summary = summary;
+    var description = getInById("description").value;
+    singleToDoItem.desc = description;
+    var dateDue = getInById("date-due").value;
+    singleToDoItem.dueDate = new Date(dateDue);
+    var Status = getInById("status").checked;
+    singleToDoItem.status = Status;
     return singleToDoItem;
 }
 function displayToDoItem(item) {

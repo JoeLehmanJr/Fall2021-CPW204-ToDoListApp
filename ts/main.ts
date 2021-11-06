@@ -54,7 +54,25 @@ function isValid(item:ToDoItem):boolean {
  */
 //TODO: Creat function to get the form data and store it in our ToDoItem object
 function getToDoItem():ToDoItem {
+    let singleToDoItem = new ToDoItem;
+
+    //Retrieve task summary
+    let summary = getInById("Summary").value;
+    singleToDoItem.summary = summary;
+
+    //Retrieve full text of the task
+    let description = getInById("description").value;
+    singleToDoItem.desc = description;
+
+    //Retrieve Due Date of the task
+    let dateDue = getInById("date-due").value;
+    singleToDoItem.dueDate = new Date(dateDue);
+
+    //Retrieve status of the Task
+    let Status = getInById("status").checked;
+    singleToDoItem.status = Status;
     return singleToDoItem;
+
 }
 
 /**
