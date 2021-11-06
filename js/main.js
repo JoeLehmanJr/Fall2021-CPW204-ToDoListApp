@@ -11,7 +11,17 @@ function getInById(id) {
 }
 var picker = datepicker("#date-due");
 picker.setMin(new Date());
-function isValid(item) {
+window.onload = function () {
+    var addBtn = getById("addToDo");
+    addBtn.onclick = addToDoItem.bind(this);
+};
+function addToDoItem() {
+    var singleToDoItem = getToDoItem();
+    if (dataIsValid(singleToDoItem)) {
+        displayToDoItem(singleToDoItem);
+    }
+}
+function dataIsValid(item) {
     var isAllDataValid = true;
     var summary = getInById("Summary");
     return isAllDataValid;

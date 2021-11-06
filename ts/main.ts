@@ -37,11 +37,26 @@ const picker = datepicker("#date-due");
 picker.setMin(new Date());
 
 /**
+ * Handles the on click event for the Add New Video Game button
+ */
+ window.onload = function() {
+    let addBtn = getById("addToDo");
+    addBtn.onclick = addToDoItem.bind(this);
+}
+
+function addToDoItem():void {
+    let singleToDoItem = getToDoItem();
+    if (dataIsValid(singleToDoItem)) {
+        displayToDoItem(singleToDoItem)
+    }
+}
+
+/**
  * Check to see if the form data is valid.
  * @returns if valid return true otherwise return false.
  */
 //TODO: creat validation function
-function isValid(item:ToDoItem):boolean {
+function dataIsValid(item:ToDoItem):boolean {
     let isAllDataValid = true;
 
     // validates Summary
@@ -52,7 +67,6 @@ function isValid(item:ToDoItem):boolean {
 /**
  * Retrieve the form data from the form and store in the object (ToDoItem).
  */
-//TODO: Creat function to get the form data and store it in our ToDoItem object
 function getToDoItem():ToDoItem {
     let singleToDoItem = new ToDoItem;
 
