@@ -8,8 +8,7 @@ Due Date as dueDate:Date
 Status as status:string
 */
 class ToDoItem{
-    summary:string;
-    desc:string;
+    title:string;
     dueDate:Date;
     status:boolean;
 }
@@ -28,7 +27,7 @@ function getById(id:string):HTMLElement{
  * @param id the id of the element you want to grab.
  * @returns HTMLInputElement that is referenced by the id parameter
  */
-function getInById(id:string):HTMLInputElement {
+function getInput(id:string):HTMLInputElement {
     return <HTMLInputElement>document.getElementById(id);
 }
 
@@ -59,10 +58,29 @@ function addToDoItem():void {
 function dataIsValid(item:ToDoItem):boolean {
     let isAllDataValid = true;
 
-    // validates Summary
-    let summary = getInById("Summary");
+    // validates Title
+    let title = item.title;
+    if (title == "") {
+        isAllDataValid = false;
+        errorMsg("The summary field is required and can not be empty.","summary-msg");
+    }
+
+
+
+    // validates date-due
+    let dateDue = item.dueDate;
+
+    if (!dateDue){
+        isAllDataValid = false;
+        errorMsg("The due date field is required and must be a valid date.","date-msg");
+    }
     return isAllDataValid;
 }
+
+function errorMsg(errMsg:string,id:string):void{
+    getInput(id).innerHTML = errMsg;
+}
+
 
 /**
  * Retrieve the form data from the form and store in the object (ToDoItem).
@@ -70,21 +88,19 @@ function dataIsValid(item:ToDoItem):boolean {
 function getToDoItem():ToDoItem {
     let singleToDoItem = new ToDoItem;
 
-    //Retrieve task summary
-    let summary = getInById("Summary").value;
-    singleToDoItem.summary = summary;
-
-    //Retrieve full text of the task
-    let description = getInById("description").value;
-    singleToDoItem.desc = description;
+    //Retrieve task Title
+    let summary = getInput("title").value;
+    singleToDoItem.title = summary;
 
     //Retrieve Due Date of the task
-    let dateDue = getInById("date-due").value;
+    let dateDue = getInput("date-due").value;
     singleToDoItem.dueDate = new Date(dateDue);
 
+
     //Retrieve status of the Task
-    let Status = getInById("status").checked;
+    let Status = getInput("status").checked;
     singleToDoItem.status = Status;
+
     return singleToDoItem;
 
 }
@@ -94,7 +110,28 @@ function getToDoItem():ToDoItem {
  */
 //TODO: Create a function to Display ToDoItem on the web page.
 function displayToDoItem(item:ToDoItem):void{
+    let itemText = document.createElement("h3");
+    itemText.innerText = item.title;
 
+    let itemDate = document.createElement("p");
+    itemDate.innerText = item.dueDate.toDateString();
+
+    let itemDiv = document.createElement("div");
+    if(item.status){
+        itemDiv.classList.add("completed");
+    }
+
+    itemDiv.appendChild(itemText);
+    itemDiv.appendChild(itemDate);
+
+    if(item.status){
+        let completedToDos = getById("complete-items");
+        completedToDos.appendChild(itemDiv);
+    }
+    else{
+        let incompleteToDos = getById("incomplete-items");
+         incompleteToDos.appendChild(itemDiv);
+    }
 }
 
 //TODO: Allow user to mark a ToDoItem as completed

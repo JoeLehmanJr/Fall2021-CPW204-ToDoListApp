@@ -14,20 +14,11 @@
         <form>
             <div class="row">
                 <div class="col-25">
-                    <label id="Summary-label" for="Summary">Task Summary:</label>
+                    <label id="title-label" for="title">Task Title:</label>
                 </div>
                 <div class="col-50">
-                    <input type="text" id="Summary">
+                    <input type="text" id="title">
                     <span id="title-msg">*</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label id="task-label" for="date-due">Full Task Description:</label>
-                </div>
-                <div class="col-50">
-                    <textarea rows="4" cols="50" id="description"></textarea>
-                    <span id="task-msg">*</span>
                 </div>
             </div>
 
@@ -55,6 +46,9 @@
             <div id="btn" class="row">
                 <input type="button" id="addToDo" value="Add ToDo Item">
             </div>
+            <h3 class="row">ToDo Items</h3>
+            <div class="row" id="incomplete-items"></div>
+            <div class="row" id="complete-items"></div>
         </form>
     </div>
 
