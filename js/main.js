@@ -11,6 +11,7 @@ function getInput(id) {
 }
 var picker = datepicker("#date-due");
 picker.setMin(new Date());
+var toDoKey = "todo";
 window.onload = function () {
     var addBtn = getElem("addToDo");
     addBtn.onclick = main.bind(this);
@@ -51,9 +52,6 @@ function dataIsValid(item) {
         if (isNaN(dateDue.getTime())) {
             isAllDataValid = false;
             errorMsg("The due date field is required and must be a valid date.", "date-msg");
-        }
-        else {
-            console.log("is valid date");
         }
     }
     return isAllDataValid;
@@ -103,7 +101,6 @@ function saveToDo(item) {
     var currentItemsString = JSON.stringify(currItems);
     localStorage.setItem(toDoKey, currentItemsString);
 }
-var toDoKey = "todo";
 function getToDoItems() {
     var itemString = localStorage.getItem(toDoKey);
     var item = JSON.parse(itemString);

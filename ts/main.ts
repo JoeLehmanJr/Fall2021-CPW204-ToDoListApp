@@ -35,6 +35,8 @@ function getInput(id:string):HTMLInputElement {
 const picker = datepicker("#date-due");
 picker.setMin(new Date());
 
+const toDoKey ="todo"
+
 /**
  * Handles the on click event for the Add New Video Game button
  */
@@ -46,6 +48,9 @@ picker.setMin(new Date());
     loadSaveItems();
 }
 
+/**
+ * Controls the flow of the app
+ */
 function main():void {
     clearErrors();
     let singleToDoItem = getToDoItem();
@@ -55,7 +60,10 @@ function main():void {
     }
 }
 
-function loadSaveItems(){
+/**
+ * loads the previously saved items and adds them to an array.
+ */
+function loadSaveItems():void{
     let itemArray = getToDoItems(); // read from localStorage
     for (let i = 0; i < itemArray.length; i++) {
         let currItem = itemArray[i];
@@ -63,7 +71,9 @@ function loadSaveItems(){
     }
 }
 
-
+/**
+ * Resets all spans to there default state.
+ */
 function clearErrors():void{
     // Clear title span
     let titleSpan = getElem("title-msg");
@@ -101,14 +111,15 @@ function dataIsValid(item:ToDoItem):boolean {
           isAllDataValid = false;
           errorMsg("The due date field is required and must be a valid date.","date-msg");
         }
-        else {
-          // date is valid
-          console.log("is valid date");
-        }
     }
     return isAllDataValid;
 }
 
+/**
+ * Displays error message in the correct span.
+ * @param errMsg The message to display.
+ * @param id The id of the span we are targeting.
+ */
 function errorMsg(errMsg:string,id:string):void{
     getInput(id).innerHTML = errMsg;
 }
@@ -169,7 +180,10 @@ function displayToDoItem(item:ToDoItem):void{
     }
 }
 
-
+/**
+ * Save ToDoItems to web storage.
+ * @param item the ToDo item object
+ */
 function saveToDo(item: ToDoItem):void {
     let currItems = getToDoItems();
     if(currItems == null){// No items found
@@ -180,7 +194,7 @@ function saveToDo(item: ToDoItem):void {
     localStorage.setItem(toDoKey,currentItemsString)
 }
 
-const toDoKey ="todo"
+
 
 /**
  * Get stored ToDo items or return null if not found
@@ -193,7 +207,9 @@ function getToDoItems():ToDoItem[] {
     return item;
 }
 
-
+/**
+ * When you click on the ToDo item mark it as complete.
+ */
 function markAsCompleted(){
     let itemDiv = <HTMLElement>this;
     itemDiv.classList.add("completed");
@@ -201,5 +217,3 @@ function markAsCompleted(){
     let completedItems = getElem("complete-items");
     completedItems.appendChild(itemDiv);
 }
-
-
