@@ -18,7 +18,7 @@ class ToDoItem{
  * @param id the id of the element you want to grab.
  * @returns HTMLElement that is referenced by the id parameter
  */
-function getById(id:string):HTMLElement{
+function getElem(id:string):HTMLElement{
     return document.getElementById(id);
 }
 
@@ -39,7 +39,7 @@ picker.setMin(new Date());
  * Handles the on click event for the Add New Video Game button
  */
  window.onload = function() {
-    let addBtn = getById("addToDo");
+    let addBtn = getElem("addToDo");
     addBtn.onclick = addToDoItem.bind(this);
 }
 
@@ -117,6 +117,8 @@ function displayToDoItem(item:ToDoItem):void{
     itemDate.innerText = item.dueDate.toDateString();
 
     let itemDiv = document.createElement("div");
+
+    itemDiv.onclick = markAsCompleted;
     itemDiv.classList.add("todo");
     if(item.status){
         itemDiv.classList.add("completed");
@@ -126,14 +128,22 @@ function displayToDoItem(item:ToDoItem):void{
     itemDiv.appendChild(itemDate);
 
     if(item.status){
-        let completedToDos = getById("complete-items");
+        let completedToDos = getElem("complete-items");
         completedToDos.appendChild(itemDiv);
     }
     else{
-        let incompleteToDos = getById("incomplete-items");
+        let incompleteToDos = getElem("incomplete-items");
          incompleteToDos.appendChild(itemDiv);
     }
 }
 
 //TODO: Allow user to mark a ToDoItem as completed
 //TODO: Store ToDoItem in web storage
+
+function markAsCompleted(){
+    let itemDiv = <HTMLElement>this;
+    itemDiv.classList.add("completed");
+
+    let completedItems = getElem("complete-items");
+    completedItems.appendChild(itemDiv);
+}
