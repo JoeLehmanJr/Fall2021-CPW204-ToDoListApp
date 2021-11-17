@@ -25,8 +25,11 @@ function main() {
     }
 }
 function loadSaveItems() {
-    var item = getToDo();
-    displayToDoItem(item);
+    var itemArray = getToDoItems();
+    for (var i = 0; i < itemArray.length; i++) {
+        var currItem = itemArray[i];
+        displayToDoItem(currItem);
+    }
 }
 function clearErrors() {
     var titleSpan = getElem("title-msg");
@@ -92,11 +95,16 @@ function displayToDoItem(item) {
     }
 }
 function saveToDo(item) {
-    var itemString = JSON.stringify(item);
-    localStorage.setItem(toDoKey, itemString);
+    var currItems = getToDoItems();
+    if (currItems == null) {
+        currItems = new Array();
+    }
+    currItems.push(item);
+    var currentItemsString = JSON.stringify(currItems);
+    localStorage.setItem(toDoKey, currentItemsString);
 }
 var toDoKey = "todo";
-function getToDo() {
+function getToDoItems() {
     var itemString = localStorage.getItem(toDoKey);
     var item = JSON.parse(itemString);
     return item;

@@ -56,8 +56,11 @@ function main():void {
 }
 
 function loadSaveItems(){
-    let item = getToDo(); // read from localStorage
-    displayToDoItem(item);
+    let itemArray = getToDoItems(); // read from localStorage
+    for (let i = 0; i < itemArray.length; i++) {
+        let currItem = itemArray[i];
+        displayToDoItem(currItem);
+    }
 }
 
 
@@ -168,23 +171,25 @@ function displayToDoItem(item:ToDoItem):void{
 
 
 function saveToDo(item: ToDoItem):void {
-    // Convert ToDoItem into JSON  string
-    let itemString = JSON.stringify(item);
-
-    // Save string
-    localStorage.setItem(toDoKey, itemString);
+    let currItems = getToDoItems();
+    if(currItems == null){// No items found
+        currItems = new Array();
+    }
+    currItems.push(item); // Add new item to the current item list
+    let currentItemsString = JSON.stringify(currItems);
+    localStorage.setItem(toDoKey,currentItemsString)
 }
 
 const toDoKey ="todo"
 
 /**
- * Get stored ToDo item or return null if not found
+ * Get stored ToDo items or return null if not found
  */
-function getToDo():ToDoItem {
+function getToDoItems():ToDoItem[] {
     // read from localStorage
     let itemString = localStorage.getItem(toDoKey);
     // Convert string to object
-    let item:ToDoItem = JSON.parse(itemString);
+    let item:ToDoItem[] = JSON.parse(itemString);
     return item;
 }
 
@@ -196,3 +201,5 @@ function markAsCompleted(){
     let completedItems = getElem("complete-items");
     completedItems.appendChild(itemDiv);
 }
+
+
