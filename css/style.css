@@ -2,8 +2,9 @@
     box-sizing: border-box;
   }
 
-  input[type=text], select, textarea {
+  input[type=text]{
     padding: 12px;
+    width: 350px;
     border: 1px solid #ccc;
     border-radius: 6px;
     resize: vertical;
@@ -71,7 +72,7 @@
     border:2px solid black;
     border-radius: 8px;
     background-color: teal;
-    width: 850px;
+    width: 950px;
   }
 
   h1{
@@ -111,4 +112,17 @@
   #incomplete-items{
     border: .1em solid black;
     margin-bottom: 1em;
+  }
+
+  #complete-items, #incomplete-items{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50%;
+    align-items: center;
+  }
+
+  #all-items{
+    display: flex;
   }

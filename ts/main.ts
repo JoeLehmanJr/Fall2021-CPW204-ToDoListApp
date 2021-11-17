@@ -40,21 +40,45 @@ picker.setMin(new Date());
  */
  window.onload = function() {
     let addBtn = getElem("addToDo");
-    addBtn.onclick = addToDoItem.bind(this);
+    addBtn.onclick = main.bind(this);
+
+    // Load save items
+    loadSaveItems();
 }
 
-function addToDoItem():void {
+function main():void {
+    clearErrors();
     let singleToDoItem = getToDoItem();
     if (dataIsValid(singleToDoItem)) {
         displayToDoItem(singleToDoItem)
+        saveToDo(singleToDoItem)
     }
+}
+
+function loadSaveItems(){
+    let item = getToDo(); // read from localStorage
+    displayToDoItem(item);
+}
+
+
+function clearErrors():void{
+    // Clear title span
+    let titleSpan = getElem("title-msg");
+    titleSpan.innerText = "*";
+
+    // Clear Date span
+    let dateSpan = getElem("date-msg");
+    dateSpan.innerText = "*";
+
+    //Clear have Completed span
+    let haveCompleted = getElem("status-msg");
+    haveCompleted.innerText = "";
 }
 
 /**
  * Check to see if the form data is valid.
  * @returns if valid return true otherwise return false.
  */
-//TODO: creat validation function
 function dataIsValid(item:ToDoItem):boolean {
     let isAllDataValid = true;
 
@@ -62,17 +86,22 @@ function dataIsValid(item:ToDoItem):boolean {
     let title = item.title;
     if (title == "") {
         isAllDataValid = false;
-        errorMsg("The summary field is required and can not be empty.","summary-msg");
+        errorMsg("The title field is required and can not be empty.","title-msg");
     }
-
-
 
     // validates date-due
     let dateDue = item.dueDate;
-
-    if (!dateDue){
-        isAllDataValid = false;
-        errorMsg("The due date field is required and must be a valid date.","date-msg");
+    if (Object.prototype.toString.call(dateDue) === "[object Date]") {
+        // it is a date
+        if (isNaN(dateDue.getTime())) {  // dateDue.valueOf() could also work
+          // date is not valid
+          isAllDataValid = false;
+          errorMsg("The due date field is required and must be a valid date.","date-msg");
+        }
+        else {
+          // date is valid
+          console.log("is valid date");
+        }
     }
     return isAllDataValid;
 }
@@ -80,7 +109,6 @@ function dataIsValid(item:ToDoItem):boolean {
 function errorMsg(errMsg:string,id:string):void{
     getInput(id).innerHTML = errMsg;
 }
-
 
 /**
  * Retrieve the form data from the form and store in the object (ToDoItem).
@@ -108,13 +136,14 @@ function getToDoItem():ToDoItem {
 /**
  * Display given ToDoItem on the web page
  */
-//TODO: Create a function to Display ToDoItem on the web page.
 function displayToDoItem(item:ToDoItem):void{
     let itemText = document.createElement("h3");
     itemText.innerText = item.title;
 
     let itemDate = document.createElement("p");
-    itemDate.innerText = item.dueDate.toDateString();
+    // itemDate.innerText = item.dueDate.toDateString();
+    let dueDate = new Date(item.dueDate.toString())
+    itemDate.innerText = dueDate.toDateString();
 
     let itemDiv = document.createElement("div");
 
@@ -137,8 +166,28 @@ function displayToDoItem(item:ToDoItem):void{
     }
 }
 
-//TODO: Allow user to mark a ToDoItem as completed
-//TODO: Store ToDoItem in web storage
+
+function saveToDo(item: ToDoItem):void {
+    // Convert ToDoItem into JSON  string
+    let itemString = JSON.stringify(item);
+
+    // Save string
+    localStorage.setItem(toDoKey, itemString);
+}
+
+const toDoKey ="todo"
+
+/**
+ * Get stored ToDo item or return null if not found
+ */
+function getToDo():ToDoItem {
+    // read from localStorage
+    let itemString = localStorage.getItem(toDoKey);
+    // Convert string to object
+    let item:ToDoItem = JSON.parse(itemString);
+    return item;
+}
+
 
 function markAsCompleted(){
     let itemDiv = <HTMLElement>this;

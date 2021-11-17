@@ -13,25 +13,45 @@ var picker = datepicker("#date-due");
 picker.setMin(new Date());
 window.onload = function () {
     var addBtn = getElem("addToDo");
-    addBtn.onclick = addToDoItem.bind(this);
+    addBtn.onclick = main.bind(this);
+    loadSaveItems();
 };
-function addToDoItem() {
+function main() {
+    clearErrors();
     var singleToDoItem = getToDoItem();
     if (dataIsValid(singleToDoItem)) {
         displayToDoItem(singleToDoItem);
+        saveToDo(singleToDoItem);
     }
+}
+function loadSaveItems() {
+    var item = getToDo();
+    displayToDoItem(item);
+}
+function clearErrors() {
+    var titleSpan = getElem("title-msg");
+    titleSpan.innerText = "*";
+    var dateSpan = getElem("date-msg");
+    dateSpan.innerText = "*";
+    var haveCompleted = getElem("status-msg");
+    haveCompleted.innerText = "";
 }
 function dataIsValid(item) {
     var isAllDataValid = true;
     var title = item.title;
     if (title == "") {
         isAllDataValid = false;
-        errorMsg("The summary field is required and can not be empty.", "summary-msg");
+        errorMsg("The title field is required and can not be empty.", "title-msg");
     }
     var dateDue = item.dueDate;
-    if (!dateDue) {
-        isAllDataValid = false;
-        errorMsg("The due date field is required and must be a valid date.", "date-msg");
+    if (Object.prototype.toString.call(dateDue) === "[object Date]") {
+        if (isNaN(dateDue.getTime())) {
+            isAllDataValid = false;
+            errorMsg("The due date field is required and must be a valid date.", "date-msg");
+        }
+        else {
+            console.log("is valid date");
+        }
     }
     return isAllDataValid;
 }
@@ -52,7 +72,8 @@ function displayToDoItem(item) {
     var itemText = document.createElement("h3");
     itemText.innerText = item.title;
     var itemDate = document.createElement("p");
-    itemDate.innerText = item.dueDate.toDateString();
+    var dueDate = new Date(item.dueDate.toString());
+    itemDate.innerText = dueDate.toDateString();
     var itemDiv = document.createElement("div");
     itemDiv.onclick = markAsCompleted;
     itemDiv.classList.add("todo");
@@ -69,6 +90,16 @@ function displayToDoItem(item) {
         var incompleteToDos = getElem("incomplete-items");
         incompleteToDos.appendChild(itemDiv);
     }
+}
+function saveToDo(item) {
+    var itemString = JSON.stringify(item);
+    localStorage.setItem(toDoKey, itemString);
+}
+var toDoKey = "todo";
+function getToDo() {
+    var itemString = localStorage.getItem(toDoKey);
+    var item = JSON.parse(itemString);
+    return item;
 }
 function markAsCompleted() {
     var itemDiv = this;
