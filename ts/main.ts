@@ -48,7 +48,7 @@ window.onload = function () {
     // Load save items
     loadSaveItems();
 
-    let modal = getElem("modal");
+    let modal = getElem("myModal");
     modal.style.display = "none";
     // Get the button that opens the modal
     let btn = getElem("myBtn");
