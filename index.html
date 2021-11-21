@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,53 +9,62 @@
     <link rel="stylesheet" href="css/style.css">
     <title>ToDo List App</title>
 </head>
+
 <body>
-    <div class="container">
-        <h1>ToDo List</h1>
-        <form>
-            <div class="row">
-                <div class="col-25">
-                    <label id="title-label" for="title">Task Title:</label>
-                </div>
-                <div class="col-50">
-                    <input type="text" id="title">
-                    <span id="title-msg">*</span>
+    <h1>My ToDo List</h1>
+    <!-- Modal content -->
+    <div id="myModal">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="container">
+                    <h1>Add To Do</h1>
+                    <form>
+                        <div class="row">
+                            <div class="col-25">
+                                <label id="title-label" for="title">Task Title:</label>
+                            </div>
+                            <div class="col-50">
+                                <input type="text" id="title">
+                                <span id="title-msg">*</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label id="date-due-label" for="date-due">Due Date: </label>
+                            </div>
+                            <div class="col-50">
+                                <input type="text" id="date-due">
+                                <span id="date-msg">*</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label id="status-label" for="status">Have Completed: </label>
+                            </div>
+                            <div class="col-50">
+                                <input type="checkbox" id="status">
+                                <span id="status-msg"></span>
+                            </div>
+                        </div>
+                        <div id="btn" class="row">
+                            <input type="button" id="addToDo" value="Add ToDo Item">
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-25">
-                    <label id="date-due-label" for="date-due">Due Date: </label>
-                </div>
-                <div class="col-50">
-                    <input type="text" id="date-due">
-                    <span id="date-msg">*</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label id="status-label" for="status">Have Completed: </label>
-                </div>
-                <div class="col-50">
-                    <input type="checkbox" id="status">
-                    <span id="status-msg"></span>
-                </div>
-            </div>
-
-
-
-            <div id="btn" class="row">
-                <input type="button" id="addToDo" value="Add ToDo Item">
-            </div>
-
-        </form>
-        <h3 class="row">ToDo Items</h3>
-        <div id="all-items">
-            <div class="row" id="incomplete-items"></div>
-            <div class="row" id="complete-items"></div>
         </div>
     </div>
+    <!-- End of Modal -->
 
+    <h3 class="row">ToDo Items</h3>
+    <div id="all-items">
+        <div class="row" id="incomplete-items"></div>
+        <div class="row" id="complete-items"></div>
+    </div>
+    <!-- Trigger/Open The Modal -->
+    <div class="center">
+        <button id="myBtn">Add To Do</button>
+    </div>
     <script src="https://unpkg.com/js-datepicker"></script>
     <script src="js/main.js"></script>
 </body>

@@ -16,6 +16,22 @@ window.onload = function () {
     var addBtn = getElem("addToDo");
     addBtn.onclick = main.bind(this);
     loadSaveItems();
+    var modal = getElem("myModal");
+    modal.style.display = "none";
+    var btn = getElem("myBtn");
+    var span = getElem("close");
+    btn.onclick = function () {
+        modal.style.display = "block";
+    };
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+};
+window.onclick = function (event) {
+    var modal = getElem("myModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 };
 function main() {
     clearErrors();
@@ -76,7 +92,8 @@ function displayToDoItem(item) {
     var dueDate = new Date(item.dueDate.toString());
     itemDate.innerText = dueDate.toDateString();
     var itemDiv = document.createElement("div");
-    itemDiv.onclick = markAsCompleted;
+    itemDiv.setAttribute("data-task-title", item.title);
+    itemDiv.onclick = toggleComplete;
     itemDiv.classList.add("todo");
     if (item.status) {
         itemDiv.classList.add("completed");
@@ -84,13 +101,40 @@ function displayToDoItem(item) {
     itemDiv.appendChild(itemText);
     itemDiv.appendChild(itemDate);
     if (item.status) {
-        var completedToDos = getElem("complete-items");
+        var completedToDos = document.getElementById("complete-items");
         completedToDos.appendChild(itemDiv);
     }
     else {
-        var incompleteToDos = getElem("incomplete-items");
+        var incompleteToDos = document.getElementById("incomplete-items");
         incompleteToDos.appendChild(itemDiv);
     }
+}
+function toggleComplete() {
+    var itemDiv = this;
+    if (itemDiv.classList.contains("completed")) {
+        itemDiv.classList.remove("completed");
+        var incompleteItems = document.getElementById("incomplete-items");
+        incompleteItems.appendChild(itemDiv);
+    }
+    else {
+        itemDiv.classList.add("completed");
+        var completedItems = document.getElementById("complete-items");
+        completedItems.appendChild(itemDiv);
+    }
+    var allToDos = getToDoItems();
+    var currentToDoTitle = itemDiv.getAttribute("data-task-title");
+    for (var index = 0; index < allToDos.length; index++) {
+        var nextToDo = allToDos[index];
+        if (nextToDo.title == currentToDoTitle) {
+            nextToDo.status = !nextToDo.status;
+        }
+    }
+    saveAllToDos(allToDos);
+}
+function saveAllToDos(allToDos) {
+    localStorage.setItem(toDoKey, "");
+    var allItemsString = JSON.stringify(allToDos);
+    localStorage.setItem(toDoKey, allItemsString);
 }
 function saveToDo(item) {
     var currItems = getToDoItems();
