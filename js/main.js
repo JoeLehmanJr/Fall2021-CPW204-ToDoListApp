@@ -16,7 +16,7 @@ window.onload = function () {
     var addBtn = getElem("addToDo");
     addBtn.onclick = main.bind(this);
     loadSaveItems();
-    var modal = getElem("myModal");
+    var modal = getElem("modal");
     modal.style.display = "none";
     var btn = getElem("myBtn");
     var span = getElem("close");
