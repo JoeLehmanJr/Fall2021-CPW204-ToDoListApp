@@ -96,11 +96,13 @@ function main(): void {
 /**
  * loads the previously saved items and adds them to an array.
  */
-function loadSaveItems(): void {
-    let itemArray = getToDoItems(); // read from localStorage
-    for (let i = 0; i < itemArray.length; i++) {
-        let currItem = itemArray[i];
-        displayToDoItem(currItem);
+ function loadSaveItems() {
+    let itemArray = getToDoItems();
+    if (itemArray != null){
+        for (let i = 0; i < itemArray.length; i++) {
+            let currItem = itemArray[i];
+            displayToDoItem(currItem);
+        }
     }
 }
 

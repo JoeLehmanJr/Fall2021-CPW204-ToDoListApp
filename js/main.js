@@ -43,9 +43,11 @@ function main() {
 }
 function loadSaveItems() {
     var itemArray = getToDoItems();
-    for (var i = 0; i < itemArray.length; i++) {
-        var currItem = itemArray[i];
-        displayToDoItem(currItem);
+    if (itemArray != null) {
+        for (var i = 0; i < itemArray.length; i++) {
+            var currItem = itemArray[i];
+            displayToDoItem(currItem);
+        }
     }
 }
 function clearErrors() {
