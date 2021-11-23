@@ -19,7 +19,7 @@ window.onload = function () {
     var modal = getElem("myModal");
     modal.style.display = "none";
     var btn = getElem("myBtn");
-    var span = getElem("close");
+    var span = getElem("myModal");
     btn.onclick = function () {
         modal.style.display = "block";
     };
