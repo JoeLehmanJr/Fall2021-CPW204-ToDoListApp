@@ -16,17 +16,20 @@ window.onload = function () {
     var addBtn = getElem("addToDo");
     addBtn.onclick = main.bind(this);
     loadSaveItems();
-    var modal = getElem("myModal");
-    modal.style.display = "none";
+    modalClose();
     var btn = getElem("myBtn");
     var span = document.getElementById("close");
-    btn.onclick = function () {
-        modal.style.display = "block";
-    };
-    span.onclick = function () {
-        modal.style.display = "none";
-    };
+    btn.onclick = modalOpen;
+    span.onclick = modalClose;
 };
+function modalClose() {
+    var modal = getElem("myModal");
+    modal.style.display = "none";
+}
+function modalOpen() {
+    var modal = getElem("myModal");
+    modal.style.display = "block";
+}
 window.onclick = function (event) {
     var modal = getElem("myModal");
     if (event.target == modal) {
@@ -35,6 +38,7 @@ window.onclick = function (event) {
 };
 function main() {
     clearErrors();
+    modalClose();
     var singleToDoItem = getToDoItem();
     if (dataIsValid(singleToDoItem)) {
         displayToDoItem(singleToDoItem);

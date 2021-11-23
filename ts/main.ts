@@ -48,8 +48,7 @@ window.onload = function () {
     // Load save items
     loadSaveItems();
 
-    let modal = getElem("myModal");
-    modal.style.display = "none";
+    modalClose();
     // Get the button that opens the modal
     let btn = getElem("myBtn");
 
@@ -57,19 +56,26 @@ window.onload = function () {
     let span = document.getElementById("close");
 
     // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-        // Get the modal
-        // let modal = getElem("myModal");
-        modal.style.display = "block";
-    }
+    btn.onclick = modalOpen;
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        // Get the modal
-        // let modal = getElem("myModal");
-        modal.style.display = "none";
-    }
+    span.onclick = modalClose;
+}
 
+/**
+ * Small function to close the modal
+ */
+function modalClose() {
+    let modal = getElem("myModal");
+    modal.style.display = "none";
+}
+
+/**
+ * Small function to show modal
+ */
+function modalOpen() {
+    let modal = getElem("myModal");
+    modal.style.display = "block";
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -86,6 +92,7 @@ window.onclick = function (event) {
  */
 function main(): void {
     clearErrors();
+    modalClose();
     let singleToDoItem = getToDoItem();
     if (dataIsValid(singleToDoItem)) {
         displayToDoItem(singleToDoItem)
