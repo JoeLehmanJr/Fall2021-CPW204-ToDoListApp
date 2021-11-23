@@ -165,3 +165,18 @@
   from {top: -300px; opacity: 0}
   to {top: 0; opacity: 1}
 }
+
+/* The Close Button */
+#close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#close:hover,
+#close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}

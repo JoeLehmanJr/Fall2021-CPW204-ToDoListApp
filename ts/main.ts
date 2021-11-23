@@ -54,7 +54,7 @@ window.onload = function () {
     let btn = getElem("myBtn");
 
     // Get the <span> element that closes the modal
-    let span = getElem("myModal");
+    let span = document.getElementById("close");
 
     // When the user clicks on the button, open the modal
     btn.onclick = function () {
